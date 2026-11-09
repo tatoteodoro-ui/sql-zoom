@@ -1,0 +1,25 @@
+SQL Zoom 2.0
+============
+
+Uso: clique no ícone "Encontrar SQL / SQ", digite e tecle Enter.
+
+  001.002.0003-4  ou  001.002.0003   -> vai ao lote (o dígito, se digitado, é conferido)
+  001.002                            -> vai à quadra
+  Também aceita sem pontos (00100200034, 001002) e sem zeros à esquerda (1.2.3).
+
+A janela mostra, enquanto você digita, se vai buscar quadra ou lote. As últimas buscas
+ficam na lista do campo.
+
+De onde vêm os dados
+  Quadra: camada "Quadra Fiscal (shapefile)" do projeto, campo SQ.
+          Se ela não estiver no projeto, a quadra é montada pelos lotes do WFS.
+  Lote:   camada "Lotes" do projeto, se houver; senão o WFS do GeoSampa
+          (geoportal:lote), aberto pelo plugin sem entrar no painel Camadas.
+          Só o lote pedido é consultado no servidor.
+
+Nomes de camadas, campo, endereço do WFS e margens do zoom ficam no início de sql_zoom.py
+(bloco CONFIGURAÇÃO).
+
+Instalação: Complementos > Gerenciar e instalar complementos > Instalar a partir do ZIP
+(ou copie a pasta sql_zoom para ...\QGIS3\profiles\default\python\plugins, substituindo
+a antiga). Reinicie o QGIS ou recarregue o complemento.
