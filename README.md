@@ -39,7 +39,7 @@ O resultado aparece na barra de mensagens do QGIS, e a feição encontrada pisca
 
 **Quadra (SQ):** a busca é feita na camada `Quadra Fiscal (shapefile)` do projeto, no campo `SQ`, que pode estar como `001.002` ou `001002`. Se essa camada não estiver no projeto, a quadra é montada juntando os lotes daquela quadra no WFS.
 
-**Lote (SQL):** se houver no projeto uma camada chamada `Lotes`, ela é usada. Senão, o plugin abre sozinho o WFS do GeoSampa (`geoportal:lote`), sem adicioná-lo ao painel Camadas. Em qualquer caso, o filtro vai para o servidor e só o lote pedido é baixado, nunca a camada inteira.
+**Lote (SQL):** se houver no projeto uma camada chamada `Lotes`, ela é usada. Senão, o plugin abre sozinho o WFS público do GeoSampa (`https://…/geoportal/wfs`, camada `geoportal:lote_cidadao`, que funciona fora da intranet; se falhar, tenta o antigo `geoportal:lote` da intranet), sem adicioná-lo ao painel Camadas. Em qualquer caso, o filtro vai para o servidor e só o lote pedido é baixado, nunca a camada inteira.
 
 A camada de lotes precisa dos campos `cd_setor_fiscal`, `cd_quadra_fiscal` e `cd_lote`. O campo `cd_digito_sql`, se existir, é usado para conferir o dígito.
 
@@ -61,8 +61,8 @@ Os nomes das camadas, o campo do SQ, o endereço do WFS, os limites e as margens
 | `CAMADA_QUADRAS` | `Quadra Fiscal (shapefile)` | Nome da camada de quadras no painel Camadas |
 | `CAMPO_SQ` | `SQ` | Campo com o SQ na camada de quadras |
 | `CAMADA_LOTES` | `Lotes` | Nome da camada de lotes, se estiver no projeto |
-| `WFS_URL` | `http://wfs.geosampa.prefeitura.sp.gov.br/geoserver/geoportal/wfs` | WFS usado quando não há camada de lotes |
-| `WFS_TIPO` | `geoportal:lote` | Tipo de feição do WFS |
+| `WFS_FONTES` | `https://wfs.geosampa.prefeitura.sp.gov.br/geoserver/geoportal/wfs` + `geoportal:lote_cidadao`; depois `http://…` + `geoportal:lote` | Endereços e tipos de feição do WFS, tentados em ordem quando não há camada de lotes |
+| `WFS_SRS` | `EPSG:31983` | Sistema de coordenadas pedido ao WFS |
 | `LIMITE_LOTE` / `LIMITE_QUADRA` | `50` / `3000` | Máximo de feições aceitas por busca |
 | `MARGEM_LOTE` / `MARGEM_QUADRA` | `0.6` / `0.15` | Folga em volta da feição ao aproximar |
 

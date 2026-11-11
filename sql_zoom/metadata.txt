@@ -3,7 +3,7 @@ name=SQL Zoom
 qgisMinimumVersion=3.16
 description=Aproxima o mapa de um lote pelo SQL ou de uma quadra só pelo SQ.
 about=Digite o SQL (001.002.0003 ou 001.002.0003-4) para ir ao lote, ou só o SQ (001.002) para ir à quadra. A quadra vem da camada local "Quadra Fiscal (shapefile)"; o lote é pedido ao WFS de lotes só para aquele SQL, sem baixar a camada inteira.
-version=2.0
+version=2.1
 author=Renato Teodoro
 email=353039048+tatoteodoro-ui@users.noreply.github.com
 tracker=https://github.com/tatoteodoro-ui/sql-zoom/issues
@@ -16,5 +16,6 @@ experimental=False
 deprecated=False
 hasProcessingProvider=no
 server=False
-changelog=2.0 - Reescrito. Busca só pelo SQ (vai até a quadra). Aceita SQL com ou sem dígito, com ou sem pontos; confere o dígito. O WFS de lotes é consultado só pelo lote pedido (filtro no servidor), usando a camada "Lotes" do projeto se houver. Lote não encontrado: mostra a quadra. Condomínios: mostra todos os registros. Mensagens na barra do QGIS, últimas buscas guardadas e destaque da feição no mapa.
+changelog=2.1 - WFS de lotes pelo endereço público (https, geoportal:lote_cidadao): funciona fora da intranet.
+  2.0 - Reescrito. Busca só pelo SQ (vai até a quadra). Aceita SQL com ou sem dígito, com ou sem pontos; confere o dígito. O WFS de lotes é consultado só pelo lote pedido (filtro no servidor), usando a camada "Lotes" do projeto se houver. Lote não encontrado: mostra a quadra. Condomínios: mostra todos os registros. Mensagens na barra do QGIS, últimas buscas guardadas e destaque da feição no mapa.
   1.0 - Versão inicial.

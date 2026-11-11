@@ -29,8 +29,13 @@ CAMPO_SQ = "SQ"
 # Camada de lotes: se houver no projeto uma camada com este nome, ela é usada (numa cópia);
 # senão, o plugin abre o WFS abaixo sozinho, sem adicioná-lo ao projeto.
 CAMADA_LOTES = "Lotes"
-WFS_URL = "http://wfs.geosampa.prefeitura.sp.gov.br/geoserver/geoportal/wfs"
-WFS_TIPO = "geoportal:lote"
+# Endereços tentados em ordem: o público (https, camada lote_cidadao, funciona fora da
+# intranet) e, como alternativa, o antigo da intranet da prefeitura.
+WFS_FONTES = [
+    ("https://wfs.geosampa.prefeitura.sp.gov.br/geoserver/geoportal/wfs", "geoportal:lote_cidadao"),
+    ("http://wfs.geosampa.prefeitura.sp.gov.br/geoserver/geoportal/wfs", "geoportal:lote"),
+]
+WFS_SRS = "EPSG:31983"   # SIRGAS 2000 / UTM 23S
 
 # Limites de segurança: se o servidor devolver mais feições que isto, o filtro não foi aplicado
 # lá e a consulta é abortada (para não baixar a camada inteira).
@@ -173,16 +178,22 @@ class SQLZoom:
         if camadas and camadas[0].isValid():
             return camadas[0].clone()
         if self._wfs is None or not self._wfs.isValid():
-            uri = QgsDataSourceUri()
-            uri.setParam("url", WFS_URL)
-            uri.setParam("typename", WFS_TIPO)
-            uri.setParam("version", "auto")
-            uri.setParam("pagingEnabled", "true")
-            camada = QgsVectorLayer(uri.uri(False), "Lotes (SQL Zoom)", "WFS")
-            if not camada.isValid():
+            for url, tipo in WFS_FONTES:
+                uri = QgsDataSourceUri()
+                uri.setParam("url", url)
+                uri.setParam("typename", tipo)
+                uri.setParam("srsname", WFS_SRS)
+                uri.setParam("version", "auto")
+                uri.setParam("pagingEnabled", "true")
+                uri.setParam("preferCoordinatesForWfsT11", "false")
+                camada = QgsVectorLayer(uri.uri(False), "Lotes (SQL Zoom)", "WFS")
+                if camada.isValid():
+                    self._wfs = camada
+                    break
+            else:
                 raise ErroBusca("Não foi possível abrir o WFS de lotes (%s). Verifique a rede ou adicione "
-                                "a camada '%s' ao projeto." % (WFS_URL, CAMADA_LOTES))
-            self._wfs = camada
+                                "a camada '%s' ao projeto."
+                                % (", ".join("%s %s" % f for f in WFS_FONTES), CAMADA_LOTES))
         return self._wfs.clone()
 
     def _consultar_lotes(self, busca, limite):

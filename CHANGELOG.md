@@ -1,5 +1,10 @@
 # Histórico de versões
 
+## 2.1 (novembro de 2026)
+
+**Corrigido**
+- O lote não era encontrado fora da intranet da prefeitura: o WFS agora usa o endereço público `https://wfs.geosampa.prefeitura.sp.gov.br/geoserver/geoportal/wfs` e a camada `geoportal:lote_cidadao`, em SIRGAS 2000 / UTM 23S (EPSG:31983). Se falhar, tenta o endereço antigo da intranet (`geoportal:lote`).
+
 ## 2.0 (novembro de 2026)
 
 Plugin reescrito.
