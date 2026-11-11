@@ -5,12 +5,12 @@ Complemento (plugin) do QGIS que aproxima o mapa de um **lote**, pelo SQL, ou de
 - Versão atual: **2.0** (veja o [histórico de versões](CHANGELOG.md))
 - QGIS mínimo: 3.16
 - Pasta do código: [`sql_zoom/`](sql_zoom/)
-- Pacote pronto para instalar: [`sql_zoom_2.0.zip`](sql_zoom_2.0.zip)
+- Pacote pronto para instalar: [`sql_zoom_2.1.zip`](sql_zoom_2.1.zip)
 
 ## Instalação
 
 1. No QGIS, abra **Complementos > Gerenciar e instalar complementos > Instalar a partir do ZIP**.
-2. Escolha o arquivo `sql_zoom_2.0.zip` e clique em **Instalar complemento**.
+2. Escolha o arquivo `sql_zoom_2.1.zip` e clique em **Instalar complemento**.
 3. Se a versão 1.0 já estava instalada, ela é substituída. Reinicie o QGIS ou recarregue o complemento.
 
 Outra forma é copiar a pasta `sql_zoom` para a pasta de complementos do seu perfil, substituindo a antiga:
