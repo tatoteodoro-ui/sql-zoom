@@ -1,0 +1,60 @@
+# Publica uma release com o zip pronto para o QGIS ("Instalar a partir do ZIP").
+# Roda sozinho quando uma tag é enviada (ex.: 2.1) ou à mão, em Actions > Release > Run workflow.
+name: Release
+
+on:
+  push:
+    tags: ["*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag já existente (ex.: 2.1)"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      TAG: ${{ inputs.tag || github.ref_name }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag || github.ref }}
+
+      - name: Confere a versão do metadata.txt
+        run: |
+          VERSAO=$(grep '^version=' sql_zoom/metadata.txt | cut -d= -f2 | tr -d '\r')
+          if [ "$VERSAO" != "${TAG#v}" ]; then
+            echo "::error::metadata.txt diz $VERSAO, mas a tag é $TAG"; exit 1
+          fi
+
+      - name: Monta o zip (pasta sql_zoom/ na raiz, como o QGIS espera)
+        run: |
+          ZIP="sql_zoom_${TAG#v}.zip"
+          zip -qr -X "$ZIP" sql_zoom -x '*__pycache__*' '*.pyc'
+          unzip -l "$ZIP"
+          echo "ZIP=$ZIP" >> "$GITHUB_ENV"
+
+      - name: Notas da versão (seção do CHANGELOG.md)
+        run: |
+          awk -v v="${TAG#v}" '
+            /^## / { dentro = ($2 == v) ; next }
+            dentro' CHANGELOG.md > notas.md
+          {
+            echo
+            echo "**Instalar:** baixe \`$ZIP\` abaixo e, no QGIS, use Complementos > Gerenciar e instalar complementos > Instalar a partir do ZIP."
+          } >> notas.md
+          cat notas.md
+
+      - name: Cria ou atualiza a release
+        run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" "$ZIP" --clobber
+            gh release edit "$TAG" --notes-file notas.md
+          else
+            gh release create "$TAG" "$ZIP" --title "SQL Zoom ${TAG#v}" --notes-file notas.md --verify-tag
+          fi
