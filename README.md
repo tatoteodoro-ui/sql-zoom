@@ -2,7 +2,7 @@
 
 Complemento (plugin) do QGIS que aproxima o mapa de um **lote**, pelo SQL, ou de uma **quadra**, só pelo SQ.
 
-- Versão atual: **2.0** (veja o [histórico de versões](CHANGELOG.md))
+- Versão atual: **2.1** (veja o [histórico de versões](CHANGELOG.md))
 - QGIS mínimo: 3.16
 - Pasta do código: [`sql_zoom/`](sql_zoom/)
 - Pacote pronto para instalar: [`sql_zoom_2.1.zip`](sql_zoom_2.1.zip)
@@ -103,7 +103,7 @@ A busca nas camadas e no WFS só pode ser testada dentro do QGIS.
 O ZIP precisa ter a pasta `sql_zoom` na raiz. Na raiz do repositório:
 
 ```
-python -c "import shutil; shutil.make_archive('sql_zoom_2.0', 'zip', '.', 'sql_zoom')"
+python -c "import shutil; shutil.make_archive('sql_zoom_2.1', 'zip', '.', 'sql_zoom')"
 ```
 
 Ao lançar uma versão nova, atualize `version` e `changelog` em `sql_zoom/metadata.txt` e o [CHANGELOG.md](CHANGELOG.md).

@@ -1,4 +1,4 @@
-SQL Zoom 2.0
+SQL Zoom 2.1
 ============
 
 Uso: clique no ícone "Encontrar SQL / SQ", digite e tecle Enter.
