@@ -5,13 +5,13 @@ Complemento (plugin) do QGIS que aproxima o mapa de um **lote**, pelo SQL, ou de
 - Versão atual: **2.1** (veja o [histórico de versões](CHANGELOG.md))
 - QGIS mínimo: 3.16
 - Pasta do código: [`sql_zoom/`](sql_zoom/)
-- Pacote pronto para instalar: [`sql_zoom_2.1.zip`](sql_zoom_2.1.zip)
+- Pacote pronto para instalar: baixe o `sql_zoom_<versão>.zip` na [última release](https://github.com/tatoteodoro-ui/sql-zoom/releases/latest) (também em [`sql_zoom_2.1.zip`](sql_zoom_2.1.zip))
 
 ## Instalação
 
 1. No QGIS, abra **Complementos > Gerenciar e instalar complementos > Instalar a partir do ZIP**.
-2. Escolha o arquivo `sql_zoom_2.1.zip` e clique em **Instalar complemento**.
-3. Se a versão 1.0 já estava instalada, ela é substituída. Reinicie o QGIS ou recarregue o complemento.
+2. Escolha o arquivo `sql_zoom_2.1.zip` (da release, não o "Source code (zip)", que o QGIS não reconhece) e clique em **Instalar complemento**.
+3. Se uma versão anterior já estava instalada, ela é substituída. Reinicie o QGIS ou recarregue o complemento.
 
 Outra forma é copiar a pasta `sql_zoom` para a pasta de complementos do seu perfil, substituindo a antiga:
 
@@ -107,3 +107,9 @@ python -c "import shutil; shutil.make_archive('sql_zoom_2.1', 'zip', '.', 'sql_z
 ```
 
 Ao lançar uma versão nova, atualize `version` e `changelog` em `sql_zoom/metadata.txt` e o [CHANGELOG.md](CHANGELOG.md).
+
+## Publicar uma versão
+
+1. Atualize `version=` em `sql_zoom/metadata.txt` e a seção da versão no `CHANGELOG.md`.
+2. Crie e envie a tag com o mesmo número (ex.: `2.1`).
+3. O workflow `.github/workflows/release.yml` monta o `sql_zoom_<versão>.zip` e publica a release com as notas do CHANGELOG. Para uma tag já existente, rode-o em **Actions > Release > Run workflow**.
