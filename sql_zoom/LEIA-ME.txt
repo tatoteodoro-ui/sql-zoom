@@ -14,7 +14,7 @@ De onde vêm os dados
   Quadra: camada "Quadra Fiscal (shapefile)" do projeto, campo SQ.
           Se ela não estiver no projeto, a quadra é montada pelos lotes do WFS.
   Lote:   camada "Lotes" do projeto, se houver; senão o WFS do GeoSampa
-          (geoportal:lote), aberto pelo plugin sem entrar no painel Camadas.
+          (geoportal:lote_cidadao, via https), aberto pelo plugin sem entrar no painel Camadas.
           Só o lote pedido é consultado no servidor.
 
 Nomes de camadas, campo, endereço do WFS e margens do zoom ficam no início de sql_zoom.py
